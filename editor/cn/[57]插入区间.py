@@ -43,10 +43,18 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+import bisect
 from typing import List
 
 
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        
+        bisect.insort(intervals, newInterval)
+        ans = [intervals[0]]
+        for l,r in intervals:
+            if l <= ans[-1][1]:
+                ans[-1][1] = max(ans[-1][1],r)
+            else:
+                ans.append([l,r])
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
