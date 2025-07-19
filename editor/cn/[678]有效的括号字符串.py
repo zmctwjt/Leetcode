@@ -48,25 +48,39 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        wildcard = 0
-        stack = []
-        for c in s:
+        # wildcard = 0
+        # stack = []
+        # for c in s:
+        #     if c == '(':
+        #         stack.append(wildcard)
+        #     elif stack and c==')':
+        #         stack.pop()
+        #     elif c == '*':
+        #         wildcard += 1
+        #     elif wildcard:
+        #         wildcard -= 1
+        #     else:
+        #         return False
+        # while stack:
+        #     if wildcard > stack.pop():
+        #         wildcard -= 1
+        #     else:
+        #         return False
+        # return True
+        min_,max_ = 0,0
+        for c in  s:
             if c == '(':
-                stack.append(wildcard)
-            elif stack and c==')':
-                stack.pop()
-            elif c == '*':
-                wildcard += 1
-            elif wildcard:
-                wildcard -= 1
+                min_ += 1
+                max_ += 1
+            elif c == ')':
+                min_ -= 1
+                max_ -= 1
             else:
+                min_ -= 1
+                max_ += 1
+            if min_ < 0:
+                min_ += 1
+            if max_ <0:
                 return False
-        while stack:
-            if wildcard > stack.pop():
-                wildcard -= 1
-            else:
-                return False
-        return True
-
-
+        return not min_
 # leetcode submit region end(Prohibit modification and deletion)
