@@ -42,11 +42,28 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def clumsy(self, n: int) -> int:
-        opt = ['*','//','+','-']
-        ans = ''
-        for i,j in zip(range(n,0,-1),range(n)):
-            ans += str(i)
-            if i != 1:
-                ans += opt[j % 4]
-        return eval(ans)
+        # opt = ['*','//','+','-']
+        # ans = ''
+        # for i,j in zip(range(n,0,-1),range(n)):
+        #     ans += str(i)
+        #     if i != 1:
+        #         ans += opt[j % 4]
+        # return eval(ans)
+        stack = []
+        for i in range(n,0,-4):
+            if i -1>0:
+                if i - 2>0:
+                    stack.append(i*(i-1)//(i-2))
+                    if i - 3>0:
+                        stack.append(i-3)
+                else:
+                    stack.append(i*(i-1))
+            else:
+                stack.append(i)
+        ans = stack[0]
+        for i in range(1,len(stack),2):
+            ans += stack[i]
+            if i + 1 <len(stack):
+                ans -= stack[i+1]
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
