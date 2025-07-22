@@ -36,7 +36,16 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        
+        ans = [-1] * len(nums)
+        stack = []
+        for i,num in enumerate(nums*2):
+            while stack and nums[stack[-1]] < num:
+                ans[stack.pop()] = num
+            stack.append(i%len(nums))
+        return ans
+
 # leetcode submit region end(Prohibit modification and deletion)
