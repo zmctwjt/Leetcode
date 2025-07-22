@@ -56,8 +56,15 @@
 #         self.right = right
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
-        if nums:
-            val = max(nums)
-            index = nums.index(val)
-            return TreeNode(val,self.constructMaximumBinaryTree(nums[:index]),self.constructMaximumBinaryTree(nums[index+1:]))
+        st = []
+        for i,num in enumerate(nums):
+            node = TreeNode(num)
+            temp = None
+            while st and st[-1].val < num:
+                temp = st.pop()
+            node.left = temp
+            if st:
+                st[-1].right = node
+            st.append(node)
+        return st[0]
 # leetcode submit region end(Prohibit modification and deletion)
