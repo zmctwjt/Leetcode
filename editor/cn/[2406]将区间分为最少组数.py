@@ -43,13 +43,22 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
-
+from heapq import *
 
 class Solution:
     def minGroups(self, intervals: List[List[int]]) -> int:
-        diff = defaultdict(int)
-        for startTime, endTime in intervals:
-            diff[startTime] += 1
-            diff[endTime+1]-=1
-        return max(accumulate(v for i,v in sorted(diff.items())))
+        # diff = defaultdict(int)
+        # for startTime, endTime in intervals:
+        #     diff[startTime] += 1
+        #     diff[endTime+1]-=1
+        # return max(accumulate(v for i,v in sorted(diff.items())))
+        intervals.sort()
+        pq = []
+        for start,end in intervals:
+            if pq and pq[0] < start:
+                heapreplace(pq,max(end,pq[0]))
+            else:
+                heappush(pq,end)
+        return len(pq)
+
 # leetcode submit region end(Prohibit modification and deletion)
