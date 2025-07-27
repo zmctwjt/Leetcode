@@ -51,17 +51,24 @@ from typing import List, Optional
 
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        stack = []
-        res =[]
-        current = root
-        while stack or current:
-            while current:
-                stack.append(current)
-                current = current.left
-            current = stack.pop()
-            res.append(current.val)
-            current = current.right
-        return res
-
+        # stack = []
+        # res =[]
+        # current = root
+        # while stack or current:
+        #     while current:
+        #         stack.append(current)
+        #         current = current.left
+        #     current = stack.pop()
+        #     res.append(current.val)
+        #     current = current.right
+        # return res
+        ans = []
+        if root:
+            if root.left:
+                ans += self.inorderTraversal(root.left)
+            ans.append(root.val)
+            if root.right:
+                ans += self.inorderTraversal(root.right)
+        return ans
         
 # leetcode submit region end(Prohibit modification and deletion)
