@@ -89,10 +89,12 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
-
+from heapq import *
 
 class Solution:
 
+    # 二分
+    """
     def check(self, cur_height: int, workerTimes: List[int],mid: int):
         for i in workerTimes:
             temp = mid - i
@@ -114,6 +116,16 @@ class Solution:
             else:
                 left = mid + 1
         return left
+    """
+    # 优先队列
+    def minNumberOfSeconds(self, mountainHeight: int, workerTimes: List[int]) -> int:
+        workerTimes = [(i,1) for i in workerTimes]
+        heapify(workerTimes)
+        ans = 0
+        for _ in range(mountainHeight):
+            x,y = workerTimes[0][0],workerTimes[0][1]
+            ans = max(ans,heapreplace(workerTimes,(x+x//(y*(y+1)//2)*(y+1),y+1))[0])
+        return ans
 
 
 # leetcode submit region end(Prohibit modification and deletion)
