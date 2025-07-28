@@ -1,4 +1,4 @@
-# 给定一个二叉树，找出其最小深度。 
+# 给定一个二叉树，找出其最小深度。
 # 
 #  最小深度是从根节点到最近叶子节点的最短路径上的节点数量。 
 # 
@@ -41,14 +41,26 @@
 #         self.right = right
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-        def dfs(node, depth=0):
-            if node.left and node.right:
-                return min(dfs(node.left, depth), dfs(node.right, depth)) +1
-            elif node.left:
-                return dfs(node.left, depth) +1
-            elif node.right:
-                return dfs(node.right, depth) +1
-            else:
-                return depth + 1
-        return dfs(root) if root else 0
+        # def dfs(node, depth=0):
+        #     if node.left and node.right:
+        #         return min(dfs(node.left, depth), dfs(node.right, depth)) +1
+        #     elif node.left:
+        #         return dfs(node.left, depth) +1
+        #     elif node.right:
+        #         return dfs(node.right, depth) +1
+        #     else:
+        #         return depth + 1
+        # return dfs(root) if root else 0
+        if root:
+            q = deque([(root,1)])
+            while q:
+                node,depth = q.popleft()
+                if not node.left and not node.right:
+                    return depth
+                if node.left:
+                    q.append((node.left,depth+1))
+                if node.right:
+                    q.append((node.right,depth+1))
+        return 0
+
 # leetcode submit region end(Prohibit modification and deletion)
