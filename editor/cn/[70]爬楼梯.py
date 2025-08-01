@@ -36,17 +36,13 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from functools import cache
+
 
 class Solution:
+    @cache
     def climbStairs(self, n: int) -> int:
-        count = 0
-        if n==1:
-            return 0
-        if n >= 1:
-            count += 1
-            count += self.climbStairs(n-1)
-        if n > 2:
-            count += 1
-            count += self.climbStairs(n-2)
-        return count
+        if n < 2:
+            return 1
+        return self.climbStairs(n-1) + self.climbStairs(n-2)
 # leetcode submit region end(Prohibit modification and deletion)
