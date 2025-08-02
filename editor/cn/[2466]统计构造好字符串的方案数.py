@@ -45,6 +45,7 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 MOD = 10**9+7
 class Solution:
+    """
     @cache
     def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
         res = 0
@@ -53,4 +54,13 @@ class Solution:
         if high < 0:
             return 0
         return (self.countGoodStrings(low-zero, high-zero, zero, one) + self.countGoodStrings(low-one, high-one, zero, one) + res)%MOD
+    """
+    def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
+        dp = [1] + [0] * high
+        for i in range(1,high+1):
+            if i >= zero:
+                dp[i] = dp[i-zero]
+            if i >= one:
+                dp[i] += dp[i-one]
+        return sum(dp[low:])% MOD
 # leetcode submit region end(Prohibit modification and deletion)
