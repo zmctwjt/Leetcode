@@ -52,15 +52,19 @@ from typing import List
 
 class Solution:
     def combinationSum4(self, nums: List[int], target: int) -> int:
-        @cache
-        def dfs(target):
-            res = 0
-            for num in nums:
-                if num < target:
-                    res += dfs(target - num)
-                if num == target:
-                    res += 1
-            return res
-        return dfs(target)
+        # @cache
+        # def dfs(target):
+        #     res = 0
+        #     for num in nums:
+        #         if num < target:
+        #             res += dfs(target - num)
+        #         if num == target:
+        #             res += 1
+        #     return res
+        # return dfs(target)
+        dp = [1]
+        for i in range(1, target + 1):
+            dp.append(sum(dp[i-num] for num in nums if num <= i))
+        return dp[target]
 
 # leetcode submit region end(Prohibit modification and deletion)
