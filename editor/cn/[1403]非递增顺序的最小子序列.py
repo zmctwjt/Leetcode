@@ -38,7 +38,18 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     def minSubsequence(self, nums: List[int]) -> List[int]:
-        
+        nums.sort(reverse=True)
+        sum_ = sum(nums)
+        cur = 0
+        ans = []
+        for num in nums:
+            ans.append(num)
+            cur += num
+            if cur > sum_ - cur:
+                return ans
 # leetcode submit region end(Prohibit modification and deletion)
