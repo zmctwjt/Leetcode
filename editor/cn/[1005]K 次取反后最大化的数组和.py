@@ -54,5 +54,7 @@ from heapq import *
 class Solution:
     def largestSumAfterKNegations(self, nums: List[int], k: int) -> int:
         heapify(nums)
-        return ans
+        for _ in range(k):
+            heapreplace(nums, -nums[0])
+        return sum(nums)
 # leetcode submit region end(Prohibit modification and deletion)
