@@ -49,15 +49,24 @@ from collections import Counter
 
 class Solution:
     def minDeletions(self, s: str) -> int:
-        cnt = Counter(s).most_common()
-        cur = cnt[0][1]
+        # cnt = Counter(s).most_common()
+        # cur = cnt[0][1]
+        # ans = 0
+        # for c,num in cnt:
+        #     if cur < num:
+        #         ans += num-cur
+        #         num = cur
+        #     if cur:
+        #         cur = num - 1
+        # return ans
+        cnt = Counter(s).values()
+        t = set()
         ans = 0
-        for c,num in cnt:
-            if cur < num:
-                ans += num-cur
-                num = cur
-            if cur:
-                cur = num - 1
+        for val in cnt:
+            while val in t and val > 0:
+                ans += 1
+                val -= 1
+            t.add(val)
         return ans
-        
+
 # leetcode submit region end(Prohibit modification and deletion)
