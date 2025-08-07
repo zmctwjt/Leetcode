@@ -40,7 +40,19 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     def minIncrementForUnique(self, nums: List[int]) -> int:
-        
+        nums.sort()
+        ans = 0
+        cur = 0
+        for num in nums:
+            if cur <= num:
+                cur = num + 1
+            else:
+                ans += cur - num
+                cur += 1
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
