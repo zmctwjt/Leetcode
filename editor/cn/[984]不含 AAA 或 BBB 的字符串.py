@@ -39,13 +39,32 @@
 class Solution:
     def strWithout3a3b(self, a: int, b: int) -> str:
         ans = []
-        if a >= b:
-            if a >= 2:
-                ans.append('a'*2)
+        while a or b:
+            if a > b:
+                if a >= 2:
+                    ans.append('aa')
+                    a -= 2
+                else:
+                    ans.append('a'*a)
+                    a = 0
+                if b:
+                    ans.append('b')
+                    b -= 1
+            elif b > a:
+                if b >= 2:
+                    ans.append('bb')
+                    b -= 2
+                else:
+                    ans.append('b'*b)
+                    b = 0
+                if a:
+                    ans.append('a')
+                    a -=1
             else:
-                ans.append('a'*a)
-
-
+                ans.append('ab'*a)
+                a = 0
+                b = 0
+        return ''.join(ans)
 
         
 # leetcode submit region end(Prohibit modification and deletion)
