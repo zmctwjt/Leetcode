@@ -63,11 +63,18 @@
 #         self.right = right
 class Solution:
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def dfs(node,prev,left):
-            if left:
-                node.val += dfs(node.left,prev,True)+prev
-            else:
-                node.val += dfs(node.right,node.val,False)
-                return node.val
-            return
+        def dfs(node,prev,left=False):
+            if node:
+                res = node.val
+                if left:
+                    node.val += dfs(node.left,node.val)
+                    res += dfs(node.right,node.val)
+                else:
+                    node.val += prev
+                if node.left:
+                    node.val += node.left.val
+                return res
+            return 0
+        dfs(root,0,True)
+        return root
 # leetcode submit region end(Prohibit modification and deletion)
