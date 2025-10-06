@@ -58,5 +58,9 @@ from typing import List
 
 class Solution:
     def getMaximumConsecutive(self, coins: List[int]) -> int:
-        
+        """_summary_
+
+        :param coins: _description_
+        :return: _description_
+        """
 # leetcode submit region end(Prohibit modification and deletion)
