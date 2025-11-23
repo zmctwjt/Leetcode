@@ -59,6 +59,9 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     def validUtf8(self, data: List[int]) -> bool:
         
