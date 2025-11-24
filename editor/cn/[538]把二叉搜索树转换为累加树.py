@@ -63,5 +63,14 @@
 #         self.right = right
 class Solution:
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-
+        total = 0
+        def dfs(node):
+            nonlocal total
+            if node:
+                dfs(node.right)
+                total += node.val
+                node.val = total
+                dfs(node.left)
+        dfs(root)
+        return root
 # leetcode submit region end(Prohibit modification and deletion)
