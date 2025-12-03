@@ -53,19 +53,11 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        res = None
-        def dfs(node):
-            nonlocal res, p, q
-            if node:
-                cur = 0
-                if node.val == p.val or node.val == q.val:
-                    cur += 1
-                cur += dfs(node.left)
-                cur += dfs(node.right)
-                if not res and cur == 2:
-                    res = node
-                return cur
-            return 0
-        dfs(root)
-        return res
+        if root in (None, p, q):
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if left and right:
+            return root
+        return left or right
 # leetcode submit region end(Prohibit modification and deletion)
