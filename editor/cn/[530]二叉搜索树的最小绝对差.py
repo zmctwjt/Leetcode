@@ -44,5 +44,16 @@
 #         self.right = right
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+        res = float('inf')
+        pre = float('-inf')
+        def dfs(node):
+            nonlocal res,pre
+            if node:
+                dfs(node.left)
+                res = min(res,node.val-pre)
+                pre = node.val
+                dfs(node.right)
+        dfs(root)
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)
