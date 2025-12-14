@@ -45,17 +45,21 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        values = []
-        nodes = []
+        pre = None
+        x = None
+        y = None
         def dfs(node):
-            nonlocal values,nodes
+            nonlocal pre, x, y
             if node:
                 dfs(node.left)
-                values.append(node.val)
-                nodes.append(node)
+                if pre and pre.val > node.val:
+                    if x:
+                        y = node
+                        return
+                    else:
+                        x = pre
+                pre = node
                 dfs(node.right)
         dfs(root)
-        for i,v in enumerate(sorted(values)):
-            if nodes[i].val != v:
-                nodes[i].val =v
+        x.val,y.val = y.val,x.val
 # leetcode submit region end(Prohibit modification and deletion)
