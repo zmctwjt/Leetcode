@@ -57,13 +57,19 @@ from typing import List
 
 
 class Solution:
+    vis = set()
     def colorBorder(self, grid: List[List[int]], row: int, col: int, color: int) -> List[List[int]]:
-        m,n = len(grid),len(grid[0])
-        def dfs(row,col,cur,tag):
-            if any(r<0 or r==m or c<0 or c==n or (grid[r][c]!=cur and grid[r][c]!=tag)  for r,c in [(row+1,col), (row-1,col), (row,col+1), (row,col-1)]):
+        isTrue = False
+        for r,c in ((1,0),(0,1),(-1,0),(0,-1)):
+            if row+r>=len(grid) or col+c>=len(grid[0]) or row+r<0 or col+c<0 or grid[row+r][col+c] != grid[row][col]:
+                isTrue = True
 
-
-        dfs(row,col,grid[row][col],color)
+        for r, c in ((1, 0), (0, 1), (-1, 0), (0, -1)):
+            if 0<= row+r < len(grid) and 0<=col+c<len(grid[0]) and grid[row+r][col+c] == grid[row][col] and (row+r,col+c) not in self.vis:
+                self.colorBorder(grid,row+r,col+c,color)
+        if isTrue:
+            grid[row][col] = color
+            self.vis.add((row,col))
         return grid
 
 # leetcode submit region end(Prohibit modification and deletion)
