@@ -57,19 +57,21 @@ from typing import List
 
 
 class Solution:
-    vis = set()
+
     def colorBorder(self, grid: List[List[int]], row: int, col: int, color: int) -> List[List[int]]:
-        isTrue = False
-        for r,c in ((1,0),(0,1),(-1,0),(0,-1)):
-            if row+r>=len(grid) or col+c>=len(grid[0]) or row+r<0 or col+c<0 or grid[row+r][col+c] != grid[row][col]:
-                isTrue = True
-
-        for r, c in ((1, 0), (0, 1), (-1, 0), (0, -1)):
-            if 0<= row+r < len(grid) and 0<=col+c<len(grid[0]) and grid[row+r][col+c] == grid[row][col] and (row+r,col+c) not in self.vis:
-                self.colorBorder(grid,row+r,col+c,color)
-        if isTrue:
-            grid[row][col] = color
-            self.vis.add((row,col))
+        vis = set()
+        m,n = len(grid),len(grid[0])
+        def dfs(row,col):
+            isTrue = False
+            vis.add((row,col))
+            for r,c in ((1,0),(0,1),(-1,0),(0,-1)):
+                if row+r>=m or col+c>=n or row+r<0 or col+c<0 or grid[row+r][col+c] != grid[row][col]:
+                    isTrue = True
+            for r, c in ((1, 0), (0, 1), (-1, 0), (0, -1)):
+                if 0<= row+r < m and 0<=col+c<n and grid[row+r][col+c] == grid[row][col] and (row+r,col+c) not in vis:
+                    dfs(row+r,col+c)
+            if isTrue:
+                grid[row][col] = color
+        dfs(row,col)
         return grid
-
 # leetcode submit region end(Prohibit modification and deletion)
