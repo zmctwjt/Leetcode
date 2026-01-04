@@ -40,26 +40,35 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
-
+from collections import deque
 
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
         m,n = len(mat),len(mat[0])
-        q = [([(r,c)],1) for r,row in enumerate(mat) for c,col in enumerate(row) if col == 1]
-        for item in q:
-            r,c = item[0][-1]
-            step = item[1]
-            mat[r][c] = -1
-            for dr,dc in ((r+1,c),(r-1,c),(r,c+1),(r,c-1)):
-                if 0 <= dr < m and 0 <= dc < n
-                    if not mat[dr][dc]:
-                        for r,c in item[0]:
-                            if mat[r][c] == -1:
-                                mat[r][c] = step
-                            step -= 1
-                    elif mat[dr][dc]!=-1:
+        res = [[0]*n for _ in range(m)]
+        def bfs(r,c):
+            vis = set()
+            dq = deque([[(r,c)]])
+            step = 1
+            while dq:
+                rc = dq.popleft()
+                if rc:
+                    dq.append([])
+                for r,c in rc:
+                    vis.add((r,c))
+                    for nr,nc in ((-1,0),(0,-1),(0,1),(1,0)):
+                        if 0<=nr+r<m and 0<=nc+c<n and (nr+r,nc+c) not in vis:
+                            if mat[nr+r][nc+c] == 0:
+                                return step
+                            dq[-1].append((nr+r,nc+c))
+                            vis.add((nr+r,nc+c))
+                step += 1
 
-
+        for r,row in enumerate(mat):
+            for c,col in enumerate(row):
+                if col:
+                    res[r][c] = bfs(r,c)
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)
 
