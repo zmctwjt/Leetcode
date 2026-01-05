@@ -45,30 +45,25 @@ from collections import deque
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
         m,n = len(mat),len(mat[0])
-        res = [[0]*n for _ in range(m)]
-        def bfs(r,c):
-            vis = set()
-            dq = deque([[(r,c)]])
-            step = 1
-            while dq:
-                rc = dq.popleft()
-                if rc:
-                    dq.append([])
-                for r,c in rc:
-                    vis.add((r,c))
-                    for nr,nc in ((-1,0),(0,-1),(0,1),(1,0)):
-                        if 0<=nr+r<m and 0<=nc+c<n and (nr+r,nc+c) not in vis:
-                            if mat[nr+r][nc+c] == 0:
-                                return step
-                            dq[-1].append((nr+r,nc+c))
-                            vis.add((nr+r,nc+c))
-                step += 1
-
+        dq = deque([[]])
         for r,row in enumerate(mat):
             for c,col in enumerate(row):
-                if col:
-                    res[r][c] = bfs(r,c)
-        return res
+                if not col:
+                    dq[-1].append([r,c])
+        step = 1
+        vis = set()
+        while dq:
+            rc = dq.popleft()
+            if rc:
+                dq.append([])
+            for r,c in rc:
+                for nr,nc in ((0,1),(1,0),(-1,0),(0,-1)):
+                    if 0<=nr+r<m and 0<=nc+c<n and mat[nr+r][nc+c]==1 and (nr+r,nc+c) not in vis:
+                        vis.add((nr+r,nc+c))
+                        mat[nr+r][nc+c] = step
+                        dq[-1].append([nr+r,nc+c])
+            step += 1
+        return mat
 
 # leetcode submit region end(Prohibit modification and deletion)
 
