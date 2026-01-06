@@ -38,8 +38,12 @@ from itertools import combinations
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        ans = []
-        for i in range(len(nums)+1):
-            ans += combinations(nums, i)
+        ans = [[]]
+        if nums:
+            c = nums.pop()
+            b = self.subsets(nums)
+            ans += b
+            for i in b:
+                ans.append(i + [c])
         return ans
 # leetcode submit region end(Prohibit modification and deletion)
