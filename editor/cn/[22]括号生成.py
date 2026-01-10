@@ -30,21 +30,17 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        path = []
         ans = []
-        def dfs(i,left):
-            if i == 2*n:
-                if left == 0:
-                    ans.append(''.join(path))
-                return
+        path = ['']*(n*2)
+        def dfs(left,right):
+            if right ==n:
+                ans.append(''.join(path))
             if left < n:
-                path.append('(')
-                dfs(i+1,left+1)
-                path.pop()
-            if left:
-                path.append(')')
-                dfs(i+1,left-1)
-                path.pop()
+                path[left+right]='('
+                dfs(left+1,right)
+            if right < left:
+                path[left+right]=')'
+                dfs(left,right+1)
         dfs(0,0)
         return ans
 # leetcode submit region end(Prohibit modification and deletion)
