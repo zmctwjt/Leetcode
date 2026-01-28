@@ -55,19 +55,14 @@ class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         m,n = len(board),len(board[0])
         def dfs(r,l,i):
-            res = False
             if board[r][l] == word[i]:
                 if i == len(word)-1:
                     return True
+                board[r][l] = '#'
                 for dr,dc in ((r+1,l),(r-1,l),(r,l+1),(r,l-1)):
-                    if 0 <= dr < m and 0 <= dc < n and board[dr][dc] != '#':
-                        board[r][l] = '#'
-                        res = res or dfs(dr,dc,i+1)
-                        board[r][l] = word[i]
-            return res
-        for r,row in enumerate(board):
-            for c,col in enumerate(row):
-                if dfs(r,c,0):
-                    return True
-        return False
+                    if 0 <= dr < m and 0 <= dc < n and dfs(dr,dc,i+1):
+                        return True
+                board[r][l] = word[i]
+            return False
+        return any(dfs(r,c,0) for c in range(n) for r in range(m))
 # leetcode submit region end(Prohibit modification and deletion)
