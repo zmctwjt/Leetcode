@@ -47,6 +47,13 @@ from typing import List
 
 class Solution:
     def maxAbsoluteSum(self, nums: List[int]) -> int:
-        perfix = list(accumulate(nums,initial=0))
-        return max(perfix)-min(perfix)
+        f0 = f1 = 0
+        ans0 = float('-inf')
+        ans1 = float('inf')
+        for num in nums:
+            f0 = max(num,f0+num)
+            f1 = min(num,f1+num)
+            ans0 = max(ans0,f0)
+            ans1 = min(ans1,f1)
+        return max(ans0,abs(ans1))
 # leetcode submit region end(Prohibit modification and deletion)
