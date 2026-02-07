@@ -35,6 +35,19 @@ from typing import List
 
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-
+        nums.sort()
+        sum_= sum(nums)
+        if sum_ // 2 != sum_/2 or nums[-1] > sum_/2:
+            return False
+        @cache
+        def dfs(i,k):
+            if i < 0:
+                return False
+            if nums[i] == k:
+                return True
+            elif nums[i] > k:
+                return dfs(i-1,k)
+            return dfs(i-1,k-nums[i]) or dfs(i-1,k)
+        return dfs(len(nums)-1,sum_/2)
         
 # leetcode submit region end(Prohibit modification and deletion)
