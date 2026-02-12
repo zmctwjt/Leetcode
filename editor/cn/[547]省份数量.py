@@ -47,5 +47,20 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        
+        n = len(isConnected)
+        p = list(range(n))
+        def find(x):
+            if p[x] != x:
+                p[x] = find(p[x])
+            return p[x]
+        ans = n
+        for i,row in enumerate(isConnected):
+            for j in range(i+1,n):
+                a,b = find(i),find(j)
+                if row[j] and a != b:
+                    p[a] = p[b]
+                    ans-=1
+        return ans
+
+
 # leetcode submit region end(Prohibit modification and deletion)
