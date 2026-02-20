@@ -59,5 +59,24 @@ class Solution:
         bank = set(bank)
         if endGene not in bank:
             return -1
-        def bfs
+        if startGene in bank:
+            bank.remove(startGene)
+        q = deque([startGene])
+        step = 0
+        while q:
+            for _ in range(len(q)):
+                sgene = q.popleft()
+                if sgene == endGene:
+                    return step
+                for gene in bank.copy():
+                    diff = 0
+                    for i in range(8):
+                        if sgene[i] != gene[i]:
+                            diff += 1
+                    if diff <= 1:
+                        q.append(gene)
+                        bank.remove(gene)
+            step += 1
+        return -1
+
 # leetcode submit region end(Prohibit modification and deletion)
