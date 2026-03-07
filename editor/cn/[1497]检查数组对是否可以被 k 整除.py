@@ -49,5 +49,13 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def canArrange(self, arr: List[int], k: int) -> bool:
-        
+        arr.sort()
+        cnt = defaultdict(int)
+        for i in arr:
+            if cnt[k-i%k]:
+                cnt[k-i%k] -= 1
+                continue
+            cnt[i%k if i % k else k] += 1
+        return sum(cnt.values()) == 0
+
 # leetcode submit region end(Prohibit modification and deletion)
