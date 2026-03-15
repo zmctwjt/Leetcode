@@ -50,5 +50,22 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        
+        ans = []
+        g = [[] for i in range(numCourses)]
+        in_degree=[0]*numCourses
+        for a,b in prerequisites:
+            in_degree[a] += 1
+            g[b].append(a)
+        dq = deque(i for i,x in enumerate(in_degree) if x==0)
+        while dq:
+            y = dq.popleft()
+            ans.append(y)
+            for d in g[y]:
+                in_degree[d]-=1
+                if not in_degree[d]:
+                    dq.append(d)
+        if len(ans) < numCourses:
+            return []
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
+
