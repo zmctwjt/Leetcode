@@ -48,11 +48,17 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
-        f=0
-        ans = float('-inf')
-        for num in nums*2:
-            f = max(num,f+num)
-            ans = max(ans,f)
-        if
-        return ans
+        ans1 = nums[0]
+        cur1 = 0
+        for num in nums:
+            cur1 = max(cur1+num,num)
+            ans1 = max(ans1,cur1)
+        ans2 = nums[0]
+        cur2 = 0
+        for num in nums:
+            cur2 = min(cur2+num,num)
+            ans2 = min(ans2,cur2)
+        ans2 = sum(nums) - ans2
+        return max(ans1,ans2 if ans2 else max(nums))
+
 # leetcode submit region end(Prohibit modification and deletion)
