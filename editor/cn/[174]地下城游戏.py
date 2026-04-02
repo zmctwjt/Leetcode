@@ -47,5 +47,12 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
-        
+        m,n = len(dungeon),len(dungeon[0])
+        dp=[-inf]*(n+1)
+        dp[0] = 0
+        for i,row in enumerate(dungeon):
+            for j,val in enumerate(row):
+                dp[j+1] = max(dp[j+1],dp[j]) +val
+        print(dp)
+        return -dp[-1]+1 if dp[-1]<0 else 1
 # leetcode submit region end(Prohibit modification and deletion)
