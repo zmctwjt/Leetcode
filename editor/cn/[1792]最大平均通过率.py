@@ -41,9 +41,23 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
+from heapq import heapify, heappop, heappush
 
 
 class Solution:
     def maxAverageRatio(self, classes: List[List[int]], extraStudents: int) -> float:
-        
+        classes = [(-((pas+1)/(tal+1) - (pas/tal)),pas,tal) for pas,tal in classes]
+        n = len(classes)
+        heapify(classes)
+        ans = 0
+        while classes:
+            rat,pas,tal = heappop(classes)
+            if extraStudents:
+                pas += 1
+                tal += 1
+                heappush(classes,(-((pas+1)/(tal+1) - (pas/tal)),pas,tal))
+                extraStudents -= 1
+                continue
+            ans += pas/tal
+        return ans/n
 # leetcode submit region end(Prohibit modification and deletion)
