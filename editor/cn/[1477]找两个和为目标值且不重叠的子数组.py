@@ -55,11 +55,25 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from math import inf
 from typing import List
 
 
 class Solution:
     def minSumOfLengths(self, arr: List[int], target: int) -> int:
-
-
+        left = 0
+        cur = 0
+        dp = [inf] * (len(arr)+1)
+        ans = inf
+        for right, val in enumerate(arr):
+            cur += val
+            dp[right+1] = min(dp[right],dp[right+1])
+            while cur > target and left < right:
+                cur -= arr[left]
+                left += 1
+            if cur == target:
+                lenght = right-left+1
+                dp[right+1] = min(dp[right+1],lenght)
+                ans = min(ans,dp[left]+lenght)
+        return -1 if ans == inf else ans
 # leetcode submit region end(Prohibit modification and deletion)
