@@ -40,5 +40,16 @@ from typing import List
 
 class Solution:
     def longestWPI(self, hours: List[int]) -> int:
-        
+        pos = defaultdict(int)
+        ans = s = 0
+        for i,h in enumerate(hours,1):
+            s += -1 if h > 8 else 1
+            if s < 0:
+                ans = i
+            else:
+                if pos[s+1]:
+                    ans = max(ans,i-pos[s+1])
+                if pos[s]==0:
+                    pos[s] = i
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
