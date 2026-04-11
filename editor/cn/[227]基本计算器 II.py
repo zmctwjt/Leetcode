@@ -32,8 +32,7 @@
 #  
 # 
 #  提示： 
-# 
-#  
+#
 #  1 <= s.length <= 3 * 10⁵ 
 #  s 由整数和算符 ('+', '-', '*', '/') 组成，中间由一些空格隔开 
 #  s 表示一个 有效表达式 
@@ -45,30 +44,32 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from re import split
+
+
 class Solution:
     def calculate(self, s: str) -> int:
-        stack = [0]
-        opt = [1]
-        i = 0
-        num = ''
-        while i < len(s):
-            c = s[i]
-            if c == '-':
-                opt[-1] = -1
-            elif c == '+':
-                opt[-1]=1
-            elif c == '*':
-                opt[-1] = stack[-1]
-            elif c == '/':
-                opt[-1] = '/'
-            elif c.isdigit():
-                num += c
-                if i+1 >= len(s) or not s[i+1].isdigit():
-                    p = 1
-                    while len(opt) > len(stack):
-                        p *= opt.pop()
-                    stack[-1] += opt[-1] * p*int(num)
-                    num = ''
-            i += 1
-        return stack[-1]
+        stack = []
+        for c in split(r'([+\-*/])',s):
+            c = c.strip()
+            if c.isdigit():
+                c = int(c)
+                if stack:
+                    if stack[-1] == '*':
+                        stack.pop()
+                        c *= stack.pop()
+                    elif stack[-1] == '/':
+                        stack.pop()
+                        c = stack.pop() // c
+            stack.append(c)
+        ans = 0
+        t = 1
+        for opt in stack:
+            if opt == '+':
+                t = 1
+            elif opt=='-':
+                t = -1
+            else:
+                ans += opt * t
+        return ans
 # leetcode submit region end(Prohibit modification and deletion)
