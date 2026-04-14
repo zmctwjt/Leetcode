@@ -65,7 +65,32 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
+        n = len(formula)
+        def dfs(i,cnt = defaultdict(int)):
+            if formula[i] == ')':
+                return cnt
+            s = ''
+            d = 1
+            return dfs(i+1,cnt)
+
+
         cnt = defaultdict(int)
-        for i in range()
+        i = 0
+        s = ''
+        d = ''
+        while i < n:
+            if formula[i].isdigit():
+                if d.isdigit():
+                    d += formula[i]
+                else:
+                    d = formula[i]
+            elif formula[i].isupper():
+                s = formula[i]
+            elif formula[i].islower():
+                s += formula[i]
+            else:
+                dfs(i+1)
+            i += 1
+
 
 # leetcode submit region end(Prohibit modification and deletion)
