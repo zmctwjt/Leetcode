@@ -63,26 +63,26 @@ from heapq import *
 
 class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
-        tasks = sorted(enumerate(tasks),key=lambda x:(x[1][0],x[0]))
-        q = []
+        tasks = sorted((start,wt,i) for i,(start,wt) in enumerate(tasks))
+        hq = [tasks[0][1:]]
         ans = []
-        cur = tasks[0][1][0]
-        for i,(e,p) in tasks:
-            if cur == e:
-                while q and cur <= e:
-                    heappush(q, [p, i])
-                    temp = heappop(q)
-                    ans.append(temp[1])
-                    cur += temp[0]
-            else:
-                while q and cur < e:
-                    temp = heappop(q)
-                    ans.append(temp[1])
-                    cur += temp[0]
-                heappush(q,[p,i])
-
-        while q:
-            ans.append(heappop(q)[1])
+        t=tasks[0][0]
+        j = 1
+        while hq:
+            w,i = heappop(hq)
+            ans.append(i)
+            t += w
+            while j < len(tasks):
+                si,wi,ii = tasks[j]
+                if si <= t:
+                    heappush(hq,tasks[j][1:])
+                    j += 1
+                    continue
+                break
+            if not hq and j < len(tasks):
+                heappush(hq,tasks[j][1:])
+                t = tasks[j][0]
+                j += 1
         return ans
 
 
