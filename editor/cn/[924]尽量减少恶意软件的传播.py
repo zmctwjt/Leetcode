@@ -59,5 +59,26 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def minMalwareSpread(self, graph: List[List[int]], initial: List[int]) -> int:
+        def dfs(node,vis):
+            ans = 1
+            for i,t in enumerate(graph[node]):
+                if t and i not in vis:
+                    if i not in initial:
+                        vis.add(i)
+                        ans += dfs(i,vis)
+                    else:
+                        return -inf
+            return ans
+
+        initial = set(initial)
+        mx = 0
+        ans = -1
+        for node in sorted(initial):
+            t = dfs(node,set([node]))
+            if mx < t:
+                mx = t
+                ans = node
+        return min(initial) if ans == -1 else ans
+
 
 # leetcode submit region end(Prohibit modification and deletion)
