@@ -52,10 +52,10 @@
 class Solution:
     def binaryGap(self, n: int) -> int:
         ans = 0
-        pre = float('inf')
-        for i,s in enumerate(bin(n)):
-            if s=='1':
-                ans =max(ans,i-pre)
-                pre = i
+        n >>= (n&-n).bit_length()
+        while n > 0:
+            gap = (n&-n).bit_length()
+            ans = max(ans,gap)
+            n >>=gap
         return ans
 # leetcode submit region end(Prohibit modification and deletion)
