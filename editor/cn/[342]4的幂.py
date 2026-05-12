@@ -41,12 +41,8 @@
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-from math import *
 
 class Solution:
     def isPowerOfFour(self, n: int) -> bool:
-        if n <= 0:
-            return False
-        temp = log(n, 4)
-        return temp == int(temp)
+        return bool(n > 0 and n.bit_length() % 2 and n.bit_count() == 1)
 # leetcode submit region end(Prohibit modification and deletion)
