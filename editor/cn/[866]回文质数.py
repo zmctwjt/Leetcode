@@ -50,11 +50,19 @@
 #  
 # 
 #  Related Topics 数学 数论 👍 115 👎 0
-
-
 # leetcode submit region begin(Prohibit modification and deletion)
-from math import isqrt
-
+# from bisect import bisect_left
+#
+# MX = 2 * 10 ** 8 +1
+# isPrime = [False]*2 + [True]*(MX-2)
+# primes = []
+# for i in range(2,MX):
+#     if isPrime[i]:
+#         t = str(i)
+#         if t == t[::-1]:
+#             primes.append(i)
+#         for j in range(i*i,MX,i):
+#             isPrime[j]=False
 
 class Solution:
     def primePalindrome(self, n: int) -> int:
@@ -63,7 +71,13 @@ class Solution:
                 if not n % i:
                     return False
             return n >1
-        while not isPrime(n) or str(n) != str(n)[::-1]:
+        t = str(n)
+        while t != t[::-1] or not isPrime(n):
             n += 1
+            t = str(n)
+            if len(t) == 8:
+                n = 10**8
+                t = str(n)
         return n
+        # return primes[bisect_left(primes,n)]
 # leetcode submit region end(Prohibit modification and deletion)
