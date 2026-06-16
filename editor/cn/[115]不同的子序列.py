@@ -46,12 +46,12 @@ class Solution:
     def numDistinct(self, s: str, t: str) -> int:
         if len(s) < len(t):
             return 0
-        dp = [[0] * (len(t)+1) for _ in range(len(s)+1)]
-        for j,tt in enumerate(t):
-            for i, ss in enumerate(s):
+        dp = [[1]+[0] * len(t) for _ in range(len(s)+1)]
+        for i,ss in enumerate(s):
+            for j in range(min(i+1,len(t))):
+                tt = t[j]
+                dp[i+1][j+1] = dp[i][j+1]
                 if ss == tt:
-                    dp[i+1][j+1] = dp[i+1][j]+1
-                else:
-                    dp[i+1][j+1] = dp[i+1][j]
+                    dp[i+1][j+1] += dp[i][j]
         return dp[-1][-1]
 # leetcode submit region end(Prohibit modification and deletion)
