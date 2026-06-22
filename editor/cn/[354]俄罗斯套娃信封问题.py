@@ -31,10 +31,19 @@
 #  
 # 
 #  Related Topics 数组 二分查找 动态规划 排序 👍 1149 👎 0
+from bisect import bisect_left
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
-        
+        envelopes.sort(key = lambda x:(x[0],-x[1]))
+        g = []
+        for w,h in envelopes:
+            i = bisect_left(g,h)
+            if i == len(g):
+                g.append(h)
+            else:
+                g[i] = h
+        return len(g)
 # leetcode submit region end(Prohibit modification and deletion)
