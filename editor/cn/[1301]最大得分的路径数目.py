@@ -77,7 +77,5 @@ class Solution:
                     val=int(val) if count else 0
                     dp[row_num][col_num] = (val,count%MOD)
         return dp[-1][-1]
-a = Solution()
-a.pathsWithMaxScore(["E23","2X2","12S"])
 
 # leetcode submit region end(Prohibit modification and deletion)
