@@ -45,5 +45,20 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def minCut(self, s: str) -> int:
-        
+        n = len(s)
+        is_palindrome = [[True]*n for _ in range(n)]
+        for r in range(1, n):
+            for l in range(r):
+                is_palindrome[l][r] = s[l] == s[r] and is_palindrome[l+1][r-1]
+
+        dp = [0] * n
+        for r in range(n):
+            if is_palindrome[0][r]:
+                continue
+            ans = inf
+            for l in range(1,r+1):
+                if is_palindrome[l][r]:
+                    ans = min(ans,dp[l-1]+1)
+            dp[r] = ans
+        return dp[-1]
 # leetcode submit region end(Prohibit modification and deletion)
