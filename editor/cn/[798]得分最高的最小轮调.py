@@ -48,47 +48,15 @@ from itertools import accumulate
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
-class Fenwick:
-    def __init__(self, n):
-        self.n = n
-        self.tree = [0] * (n + 2)
-
-    def update(self, i, delta):
-        while i <= self.n:
-            self.tree[i] += delta
-            i += i & -i
-
-    def query(self, i):
-        ans = 0
-        while i > 0:
-            ans += self.tree[i]
-            i -= i & -i
-        return ans
-
-    def range(self,l,r):
-        if l > r:
-            return 0
-        l = max(l, 1)
-        r = min(r, self.n)
-        return self.query(r) - self.query(l-1)
-
 class Solution:
     def bestRotation(self, nums: List[int]) -> int:
         n = len(nums)
-        a = max(nums)
-        b = min(nums)
-        perfix_right = Fenwick(a+n-b+1)
+        diff = [0]*(len(nums)+1)
         for i,num in enumerate(nums):
-            perfix_right.update(i-num+a+1,1)
-        perfix_left = Fenwick(a+n-b+1)
-        max_ = 0
-        ans = 0
-        for i,num in enumerate(nums):
-            t = perfix_right.range(i+a+1,a+n-b+1) +perfix_left.range(i-n+a+1,a+n-b+1)
-            perfix_right.update(i-num+a+1,-1)
-            perfix_left.update(i-num+a+1,1)
-            if t > max_:
-                max_ =  t
-                ans = i
-        return ans
+            diff[i+1] += 1
+            diff[(i-num+n) % n +1] -= 1
+        perfix = list(accumulate(diff))
+        return perfix.index(max(perfix))
+
 # leetcode submit region end(Prohibit modification and deletion)
+
