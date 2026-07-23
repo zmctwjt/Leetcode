@@ -55,5 +55,13 @@ from typing import List
 
 class Solution:
     def maxRunTime(self, n: int, batteries: List[int]) -> int:
-        
+        left = 0
+        right = sum(batteries) // n +1
+        while left+1 < right:
+            mid = (left + right) // 2
+            if sum(min(b,mid) for b in batteries) >= n*mid:
+                left = mid
+            else:
+                right = mid
+        return left
 # leetcode submit region end(Prohibit modification and deletion)
