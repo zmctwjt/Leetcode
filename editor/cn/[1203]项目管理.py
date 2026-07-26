@@ -69,8 +69,9 @@ class Solution:
                 if gp != group[bitem]:
                     group_g[group[bitem]].append(gp)
                     group_in_degree[gp] += 1
-                items_g[bitem].append(item)
-                items_in_degree[item] += 1
+                else:
+                    items_g[bitem].append(item)
+                    items_in_degree[item] += 1
         group_sort = []
         group_dq = deque(gp for gp,d in enumerate(group_in_degree) if not d)
         while group_dq:
