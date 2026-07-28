@@ -46,12 +46,12 @@
 class Solution:
     def minInsertions(self, s: str) -> int:
         n = len(s)
-        @cache
-        def dfs(l,r):
-            if l >= r:
-                return 0
-            if s[l] == s[r]:
-                return dfs(l+1,r-1)
-            return min(dfs(l+1,r),dfs(l,r-1)) + 1
-        return dfs(0,n-1)
+        dp = [[0]*(n+1) for _ in range(n+1)]
+        for l in range(n-1,-1,-1):
+            for r in range(l+1,n):
+                if s[l] == s[r]:
+                    dp[l][r] = dp[l+1][r-1]
+                else:
+                    dp[l][r] = min(dp[l+1][r],dp[l][r-1])+1
+        return dp[0][n-1]
 # leetcode submit region end(Prohibit modification and deletion)
